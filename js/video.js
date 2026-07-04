@@ -55,6 +55,9 @@ export function mountClips() {
     video.addEventListener('loadedmetadata', () => {
       const p = players.find(p => p.video === video)
       if (p) p.duration = video.duration
+      // the clip replaces the procedural world for this stop;
+      // if the video never loads, the canvas stays as fallback
+      sec.classList.add('has-clip')
     })
   }
 }

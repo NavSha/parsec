@@ -103,6 +103,12 @@ export const ENTRIES = [
     line: 'Seven earths around one dim ember. Their skies are full of each other.',
   },
   {
+    id: 'pso-j318', kind: 'stop', d: 80 * LY, span: 1.2,
+    name: 'PSO J318.5−22', sub: 'Rogue planet · ~80 light-years',
+    stats: '~6 Jupiter masses · bound to no star · eternal night',
+    line: 'It orbits nothing. It answers to nothing. It just goes.',
+  },
+  {
     id: 'wasp-76b', kind: 'stop', d: 640 * LY, span: 1.2,
     name: 'WASP-76b', sub: 'Hot Jupiter · ~640 light-years',
     stats: 'Dayside: 2,400°C · tidally locked',

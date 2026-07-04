@@ -47,3 +47,7 @@
 {"ts":"2026-07-04T10:57:27.392Z","cmd":"js","args":"document.getElementById('earth').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-04T10:57:28.883Z","cmd":"screenshot","args":"--viewport /tmp/m4-mobile-earth.png","origin":"http://localhost:8471/","durationMs":32,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-04T10:57:47.716Z","cmd":"viewport","args":"1280x720","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T11:01:35.782Z","cmd":"reload","args":"","origin":"http://localhost:8471/","durationMs":24,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T11:01:37.052Z","cmd":"console","args":"--errors","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T11:01:37.085Z","cmd":"js","args":"document.getElementById('pso-j318').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T11:01:38.585Z","cmd":"screenshot","args":"--viewport /tmp/m4-rogue.png","origin":"http://localhost:8471/","durationMs":31,"status":"ok","hasCookies":false,"mode":"launched"}

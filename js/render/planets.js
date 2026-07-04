@@ -19,6 +19,7 @@ const SPECS = {
   'proxima-b': { type: 'exo', palette: ['#8f5a4a', '#5c3a33'], rim: '#ff8a5c', seed: 21 },
   'barnards-b': { type: 'exo', palette: ['#7a6a5f', '#4d423b'], rim: '#d98a63', seed: 22 },
   'trappist-1': { type: 'system', seed: 23 },
+  'pso-j318': { type: 'exo', palette: ['#3a3f4d', '#22242e'], rim: '#6a7390', dim: true, seed: 28 },
   'wasp-76b': { type: 'exo', palette: ['#d97a3f', '#8f3a24'], rim: '#ffc46b', molten: true, seed: 24 },
   'kepler-452b': { type: 'exo', palette: ['#5f8a5a', '#3f5f7a'], rim: '#cfe8a8', seed: 25 },
   sweeps: { type: 'exo', palette: ['#5a5f7a', '#3a3f52'], rim: '#8a93c4', dim: true, seed: 26 },

@@ -9,11 +9,11 @@ select pl_name,sy_dist,pl_rade,pl_eqt,disc_year,discoverymethod
 from ps where default_flag=1
 `.trim().replace(/\s+/g, '+')
 
-const URL = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=${QUERY}&format=json`
+const ENDPOINT = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=${QUERY}&format=json`
 
 const PC_TO_LY = 3.26156
 
-const res = await fetch(URL)
+const res = await fetch(ENDPOINT)
 if (!res.ok) throw new Error(`TAP query failed: ${res.status} ${await res.text()}`)
 const rows = await res.json()
 

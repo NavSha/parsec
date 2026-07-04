@@ -3,6 +3,7 @@ import { ENTRIES } from './journey.js'
 import { Starfield } from './render/starfield.js'
 import { visualFor, paintBelt } from './render/planets.js'
 import { Field } from './render/particles.js'
+import { mountClips, scrubClips } from './video.js'
 
 const journeyEl = document.getElementById('journey')
 const counterEl = document.getElementById('counter')
@@ -20,7 +21,7 @@ const SIZES = {
   sun: 300, mercury: 170, venus: 210, earth: 220, mars: 190,
   jupiter: 290, saturn: 250, uranus: 200, neptune: 200, pluto: 160,
   heliopause: 200, 'voyager-1': 170,
-  'proxima-b': 210, 'barnards-b': 180, 'trappist-1': 260,
+  'proxima-b': 210, 'barnards-b': 180, 'trappist-1': 260, 'pso-j318': 220,
   'wasp-76b': 230, 'kepler-452b': 210, sweeps: 150, finale: 320,
 }
 
@@ -68,6 +69,8 @@ for (const e of ENTRIES) {
   }
   journeyEl.appendChild(sec)
 }
+
+mountClips()
 
 // ---- fade-in on approach ----
 
@@ -163,6 +166,8 @@ function update() {
       passedEl.textContent = n > 0 ? `${n.toLocaleString('en-US')} worlds behind you` : ''
     }
   }
+
+  scrubClips(window.scrollY, window.innerHeight)
 
   if (!reduced) {
     const mid = window.scrollY + window.innerHeight / 2

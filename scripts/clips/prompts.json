@@ -1,0 +1,40 @@
+{
+  "style": "photorealistic space cinematography, deep near-black space (#04060c), pinpoint stars, slow steady camera, no text, no watermarks, no lens flares, quiet and vast mood",
+  "shots": [
+    {
+      "id": "launch",
+      "stop": "title",
+      "prompt": "Cinematic view from low Earth orbit: the curve of Earth's blue horizon fills the lower frame with a thin glowing atmosphere line, sunrise creeping along the limb, deep black space above with faint stars. The camera pulls slowly upward and away from Earth, steady and smooth, as the planet recedes. Photorealistic space cinematography, no text, quiet and vast."
+    },
+    {
+      "id": "jupiter",
+      "stop": "jupiter",
+      "prompt": "Slow majestic flyby of Jupiter filling most of the frame: swirling amber, cream and rust cloud bands in fine detail, the Great Red Spot rotating slowly into view. Camera drifts forward past the planet at constant speed. Deep black space with pinpoint stars behind. Photorealistic, no text, awe and silence."
+    },
+    {
+      "id": "saturn",
+      "stop": "saturn",
+      "prompt": "Camera skims low across Saturn's rings, nearly edge-on: backlit ice particles sparkle as they stream past below, the pale gold sphere of Saturn looming in the upper background with soft cloud bands. Slow constant forward drift through the ring plane. Deep black space, pinpoint stars. Photorealistic, no text."
+    },
+    {
+      "id": "heliopause",
+      "stop": "heliopause",
+      "prompt": "Deep space at the edge of the solar system: a vast, faint, translucent veil of pale blue light shimmers gently across the frame like a thin aurora curtain in the void. The camera drifts slowly forward and passes through the veil into darker, denser starfield beyond. Almost black, subtle, photorealistic, no text."
+    },
+    {
+      "id": "trappist",
+      "stop": "trappist-1",
+      "prompt": "A dim red dwarf star glows like a cool ember in deep space, and seven small rocky planets are strung out in a line beside it, each faintly rim-lit in red. The camera approaches slowly and steadily from the dark. Deep black space, pinpoint stars. Photorealistic, hushed and wondrous, no text."
+    },
+    {
+      "id": "rogue",
+      "stop": "pso-j318",
+      "prompt": "A starless rogue planet: a huge dark sphere silhouetted against a dense field of stars, its edge barely rim-lit by the faint glow of the distant Milky Way band. The camera drifts slowly past it in silence. Almost completely dark, ominous and lonely, photorealistic, no text."
+    },
+    {
+      "id": "finale",
+      "stop": "finale",
+      "prompt": "The camera pulls back steadily through a dense field of thousands of stars, accelerating gently, until the stars gather and resolve into the glowing spiral arm structure of the Milky Way galaxy seen from above, its warm core and blue-white arms filling the frame. Photorealistic deep space, majestic, no text."
+    }
+  ]
+}

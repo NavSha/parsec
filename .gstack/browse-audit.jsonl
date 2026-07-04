@@ -1,0 +1,19 @@
+{"ts":"2026-07-04T10:40:51.323Z","cmd":"goto","args":"http://localhost:8471/","origin":"http://localhost:8471/","durationMs":54,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:40:51.358Z","cmd":"console","args":"--errors","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:40:51.726Z","cmd":"screenshot","args":"/tmp/parsec-title.png","origin":"http://localhost:8471/","durationMs":339,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:07.420Z","cmd":"js","args":"window.scrollTo(0,0)","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:07.478Z","cmd":"screenshot","args":"--viewport /tmp/p1-title.png","origin":"http://localhost:8471/","durationMs":27,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:07.509Z","cmd":"js","args":"document.getElementById('earth').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:08.787Z","cmd":"screenshot","args":"--viewport /tmp/p2-earth.png","origin":"http://localhost:8471/","durationMs":13,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:08.821Z","cmd":"js","args":"document.getElementById('interstellar').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:10.094Z","cmd":"screenshot","args":"--viewport /tmp/p3-zone.png","origin":"http://localhost:8471/","durationMs":12,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:10.128Z","cmd":"js","args":"document.getElementById('wasp-76b').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:11.403Z","cmd":"screenshot","args":"--viewport /tmp/p4-wasp.png","origin":"http://localhost:8471/","durationMs":15,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:41:11.438Z","cmd":"js","args":"document.querySelector('#counter .value').textContent + ' ' + document.querySelector('#counter .unit').textContent","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:53.299Z","cmd":"reload","args":"","origin":"http://localhost:8471/","durationMs":10,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:53.330Z","cmd":"js","args":"document.getElementById('earth').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:54.692Z","cmd":"js","args":"document.querySelector('#counter .value').textContent+' '+document.querySelector('#counter .unit').textContent","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:54.726Z","cmd":"js","args":"document.getElementById('interstellar').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:56.101Z","cmd":"screenshot","args":"--viewport /tmp/p5-zone-fixed.png","origin":"http://localhost:8471/","durationMs":13,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:56.134Z","cmd":"js","args":"window.scrollTo(0,0)","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:42:56.700Z","cmd":"js","args":"getComputedStyle(document.getElementById('counter')).opacity","origin":"http://localhost:8471/","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}

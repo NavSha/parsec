@@ -26,25 +26,41 @@ export function formatDistance(meters) {
 }
 
 // stops: ordered [{d: meters, span?: number}, ...]. Each stop's `span` is the
-// scroll weight of the segment from it to the next stop (last stop's span is
-// the tail of the page and doesn't affect the mapping).
-export function buildScale(stops) {
+// scroll weight of the segment from it to the next stop.
+// align 'start': stop i's distance is reached at its segment boundary.
+// align 'center': stop i's distance is reached at the middle of its own
+// section (matches a layout where each stop's card is centered in a
+// span-tall section), clamping to the first/last distance at the ends.
+export function buildScale(stops, { align = 'start' } = {}) {
+  const spans = stops.map(s => s.span ?? 1)
+  const total = align === 'start'
+    ? spans.slice(0, -1).reduce((a, b) => a + b, 0)
+    : spans.reduce((a, b) => a + b, 0)
+
+  // anchor position (in span units) where each stop's distance holds
+  const anchors = []
+  let cum = 0
+  for (let i = 0; i < stops.length; i++) {
+    anchors.push(align === 'start' ? cum : cum + spans[i] / 2)
+    cum += spans[i]
+  }
+
   const segs = []
-  let total = 0
   for (let i = 0; i < stops.length - 1; i++) {
-    const span = stops[i].span ?? 1
     segs.push({
       from: Math.log(Math.max(stops[i].d, 1)),
       to: Math.log(Math.max(stops[i + 1].d, 1)),
-      start: total,
-      span,
+      start: anchors[i],
+      span: anchors[i + 1] - anchors[i],
     })
-    total += span
   }
 
   function distanceAt(p) {
     const x = Math.min(Math.max(p, 0), 1) * total
-    let seg = segs[segs.length - 1]
+    if (x <= anchors[0]) return Math.exp(segs[0].from)
+    const last = segs[segs.length - 1]
+    if (x >= last.start + last.span) return Math.exp(last.to)
+    let seg = last
     for (const s of segs) {
       if (x <= s.start + s.span) { seg = s; break }
     }
@@ -52,11 +68,10 @@ export function buildScale(stops) {
     return Math.exp(seg.from + (seg.to - seg.from) * t)
   }
 
-  // scroll fraction at which stop `index` is reached
+  // scroll fraction at which stop `index`'s distance is reached
   function fractionOf(index) {
-    if (index <= 0) return 0
-    if (index >= segs.length) return 1
-    return segs[index].start / total
+    const i = Math.min(Math.max(index, 0), anchors.length - 1)
+    return anchors[i] / total
   }
 
   return { distanceAt, fractionOf, totalSpan: total }

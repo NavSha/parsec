@@ -115,8 +115,8 @@ section.zone h2 {
   transform: translateY(28px);
   transition: opacity 1s ease, transform 1s ease;
 }
-.visible .card, .visible h2 { opacity: 1; transform: translateY(0); }
 section.zone h2 { opacity: 0; transform: translateY(28px); transition: opacity 1s ease, transform 1s ease; }
+.visible .card, section.zone.visible h2 { opacity: 1; transform: translateY(0); }
 
 .card h3 {
   font-size: clamp(30px, 5.5vw, 46px);

@@ -49,17 +49,18 @@ for (const sec of journeyEl.children) io.observe(sec)
 
 // ---- distance counter ----
 
-const scale = buildScale(ENTRIES)
+const scale = buildScale(ENTRIES, { align: 'center' })
 
 function update() {
   const titleH = document.getElementById('title').offsetHeight
-  const travel = journeyEl.offsetHeight - window.innerHeight
-  const p = (window.scrollY - titleH) / Math.max(travel, 1)
-
-  if (p < -0.2) {
+  if (window.scrollY < titleH * 0.6) {
     counterEl.classList.remove('on')
     return
   }
+  // fraction of the journey at the viewport's vertical center, so the
+  // counter matches each stop when its card is centered on screen
+  const p = (window.scrollY + window.innerHeight / 2 - titleH) / journeyEl.offsetHeight
+
   counterEl.classList.add('on')
   const { value, unit } = formatDistance(scale.distanceAt(p))
   valueEl.textContent = value

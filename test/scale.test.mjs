@@ -92,6 +92,27 @@ test('out-of-range p clamps to endpoints', () => {
   assert.equal(s.distanceAt(1.5), s.distanceAt(1))
 })
 
+// --- center alignment (cards centered in span-tall sections) ---
+
+test('center align holds first distance until the first section midpoint', () => {
+  const s = buildScale(SIMPLE, { align: 'center' })
+  // total spans = 4; first anchor at 0.5/4
+  assert.ok(Math.abs(s.distanceAt(0) - 1e9) / 1e9 < 1e-9)
+  assert.ok(Math.abs(s.distanceAt(0.5 / 4) - 1e9) / 1e9 < 1e-9)
+})
+
+test('center align lands each stop distance at its section center', () => {
+  const s = buildScale(SIMPLE, { align: 'center' })
+  // second stop (span 2) centered at (1 + 1)/4
+  assert.ok(Math.abs(s.distanceAt(2 / 4) - 1e11) / 1e11 < 1e-9)
+})
+
+test('center align clamps to last distance past the last section center', () => {
+  const s = buildScale(SIMPLE, { align: 'center' })
+  assert.ok(Math.abs(s.distanceAt(1) - 1e15) / 1e15 < 1e-9)
+  assert.ok(Math.abs(s.distanceAt(3.6 / 4) - 1e15) / 1e15 < 1e-9)
+})
+
 // --- the real journey data ---
 
 test('journey entries are sorted by distance', () => {

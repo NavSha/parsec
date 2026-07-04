@@ -74,5 +74,20 @@ export function buildScale(stops, { align = 'start' } = {}) {
     return anchors[i] / total
   }
 
-  return { distanceAt, fractionOf, totalSpan: total }
+  // inverse mapping: scroll fraction at which distance d (meters) is reached
+  function fractionAtDistance(d) {
+    const ln = Math.log(Math.max(d, 1))
+    if (ln <= segs[0].from) return anchors[0] / total
+    const last = segs[segs.length - 1]
+    if (ln >= last.to) return (last.start + last.span) / total
+    for (const s of segs) {
+      if (ln <= s.to) {
+        const t = s.to === s.from ? 0 : (ln - s.from) / (s.to - s.from)
+        return (s.start + t * s.span) / total
+      }
+    }
+    return 1
+  }
+
+  return { distanceAt, fractionOf, fractionAtDistance, totalSpan: total }
 }

@@ -21,13 +21,36 @@ body {
 
 /* ---- layers ---- */
 
-#stars {
+#stars, #field {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
 #title, #journey { position: relative; z-index: 1; }
+
+#tooltip {
+  position: fixed;
+  z-index: 20;
+  background: rgba(10, 14, 24, 0.92);
+  border: 1px solid rgba(159, 196, 255, 0.25);
+  border-radius: 6px;
+  padding: 10px 14px;
+  max-width: 260px;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+#tooltip .t-name { font-size: 14px; letter-spacing: 0.04em; margin-bottom: 4px; }
+#tooltip .t-info { font-size: 11.5px; color: var(--dim); line-height: 1.5; }
+
+#counter .passed {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 8px;
+  transition: opacity 0.6s ease;
+}
 
 /* ---- fixed chrome ---- */
 

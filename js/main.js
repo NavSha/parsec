@@ -2,11 +2,14 @@ import { buildScale, formatDistance } from './scale.js'
 import { ENTRIES } from './journey.js'
 import { Starfield } from './render/starfield.js'
 import { visualFor, paintBelt } from './render/planets.js'
+import { Field } from './render/particles.js'
 
 const journeyEl = document.getElementById('journey')
 const counterEl = document.getElementById('counter')
 const valueEl = counterEl.querySelector('.value')
 const unitEl = counterEl.querySelector('.unit')
+const passedEl = counterEl.querySelector('.passed')
+const tooltipEl = document.getElementById('tooltip')
 
 // ---- build sections ----
 
@@ -81,6 +84,61 @@ for (const sec of journeyEl.children) io.observe(sec)
 const stars = new Starfield(document.getElementById('stars'))
 stars.start()
 
+// ---- exoplanet particle field (lazy: data loads after first paint) ----
+
+let field = null
+
+async function initField() {
+  try {
+    const res = await fetch('data/exoplanets.json')
+    if (!res.ok) return
+    const data = await res.json()
+    const titleH = document.getElementById('title').offsetHeight
+    field = new Field(document.getElementById('field'), data.planets, scale, {
+      journeyHeight: journeyEl.offsetHeight,
+      titleH,
+    })
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      field.setScroll(window.scrollY)
+      field.draw(0)
+    } else {
+      const loop = t => {
+        field.setScroll(window.scrollY)
+        field.draw(t)
+        requestAnimationFrame(loop)
+      }
+      requestAnimationFrame(loop)
+    }
+  } catch {
+    // no data, no field — the journey still works
+  }
+}
+initField()
+
+// tap/click a particle to identify the world
+window.addEventListener('click', ev => {
+  if (!field) return
+  const hit = field.hitTest(ev.clientX, ev.clientY)
+  if (!hit) {
+    tooltipEl.hidden = true
+    return
+  }
+  const parts = []
+  if (hit.rade != null) parts.push(`${hit.rade}× Earth radius`)
+  if (hit.teq != null) parts.push(`~${hit.teq} K`)
+  parts.push(`${hit.ly.toLocaleString('en-US')} light-years`)
+  tooltipEl.innerHTML = `<div class="t-name"></div><div class="t-info"></div>`
+  tooltipEl.querySelector('.t-name').textContent = hit.name
+  tooltipEl.querySelector('.t-info').textContent = parts.join(' · ')
+  tooltipEl.hidden = false
+  const pad = 14
+  tooltipEl.style.left = `${Math.min(ev.clientX + pad, window.innerWidth - 280)}px`
+  tooltipEl.style.top = `${Math.min(ev.clientY + pad, window.innerHeight - 90)}px`
+  clearTimeout(tooltipEl._t)
+  tooltipEl._t = setTimeout(() => { tooltipEl.hidden = true }, 4500)
+})
+
 // ---- scroll: counter + parallax ----
 
 const scale = buildScale(ENTRIES, { align: 'center' })
@@ -100,6 +158,10 @@ function update() {
     const { value, unit } = formatDistance(scale.distanceAt(p))
     valueEl.textContent = value
     unitEl.textContent = unit
+    if (field) {
+      const n = field.passedCount()
+      passedEl.textContent = n > 0 ? `${n.toLocaleString('en-US')} worlds behind you` : ''
+    }
   }
 
   if (!reduced) {

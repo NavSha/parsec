@@ -113,6 +113,22 @@ test('center align clamps to last distance past the last section center', () => 
   assert.ok(Math.abs(s.distanceAt(3.6 / 4) - 1e15) / 1e15 < 1e-9)
 })
 
+// --- fractionAtDistance: inverse mapping ---
+
+test('fractionAtDistance inverts distanceAt', () => {
+  const s = buildScale(SIMPLE, { align: 'center' })
+  for (const p of [0.2, 0.4, 0.55, 0.7, 0.85]) {
+    const d = s.distanceAt(p)
+    assert.ok(Math.abs(s.fractionAtDistance(d) - p) < 1e-9, `round-trip failed at p=${p}`)
+  }
+})
+
+test('fractionAtDistance clamps outside the journey', () => {
+  const s = buildScale(SIMPLE, { align: 'center' })
+  assert.equal(s.fractionAtDistance(1), s.fractionAtDistance(1e9))
+  assert.equal(s.fractionAtDistance(1e20), s.fractionAtDistance(1e15))
+})
+
 // --- the real journey data ---
 
 test('journey entries are sorted by distance', () => {

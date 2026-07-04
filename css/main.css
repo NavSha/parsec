@@ -19,6 +19,16 @@ body {
   overflow-x: hidden;
 }
 
+/* ---- layers ---- */
+
+#stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+#title, #journey { position: relative; z-index: 1; }
+
 /* ---- fixed chrome ---- */
 
 #counter {
@@ -107,6 +117,34 @@ section.zone h2 {
   color: var(--dim);
   text-align: center;
 }
+
+.stop-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(28px, 5vh, 56px);
+  width: 100%;
+  max-width: 640px;
+}
+
+canvas.world {
+  opacity: 0;
+  transition: opacity 1.4s ease; /* transform is owned by the parallax loop */
+  will-change: transform;
+}
+.visible canvas.world { opacity: 1; }
+
+canvas.belt {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  will-change: transform;
+  pointer-events: none;
+}
+section.zone { position: relative; overflow: hidden; }
+section.zone.visible .belt { opacity: 1; }
 
 .card {
   max-width: 520px;

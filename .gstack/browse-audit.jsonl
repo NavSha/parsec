@@ -17,3 +17,26 @@
 {"ts":"2026-07-04T10:42:56.101Z","cmd":"screenshot","args":"--viewport /tmp/p5-zone-fixed.png","origin":"http://localhost:8471/","durationMs":13,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-04T10:42:56.134Z","cmd":"js","args":"window.scrollTo(0,0)","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-04T10:42:56.700Z","cmd":"js","args":"getComputedStyle(document.getElementById('counter')).opacity","origin":"http://localhost:8471/","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:09.413Z","cmd":"goto","args":"http://localhost:8471/","origin":"http://localhost:8471/","durationMs":34,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:10.474Z","cmd":"console","args":"--errors","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:23.301Z","cmd":"js","args":"document.getElementById('sun').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:24.811Z","cmd":"screenshot","args":"--viewport /tmp/m2-sun.png","origin":"http://localhost:8471/","durationMs":61,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:24.850Z","cmd":"js","args":"document.getElementById('earth').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:26.341Z","cmd":"screenshot","args":"--viewport /tmp/m2-earth.png","origin":"http://localhost:8471/","durationMs":34,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:26.374Z","cmd":"js","args":"document.getElementById('jupiter').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:27.879Z","cmd":"screenshot","args":"--viewport /tmp/m2-jupiter.png","origin":"http://localhost:8471/","durationMs":45,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:27.916Z","cmd":"js","args":"document.getElementById('saturn').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:29.412Z","cmd":"screenshot","args":"--viewport /tmp/m2-saturn.png","origin":"http://localhost:8471/","durationMs":41,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:29.446Z","cmd":"js","args":"document.getElementById('asteroid-belt').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:30.939Z","cmd":"screenshot","args":"--viewport /tmp/m2-asteroid-belt.png","origin":"http://localhost:8471/","durationMs":32,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:30.976Z","cmd":"js","args":"document.getElementById('trappist-1').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:32.458Z","cmd":"screenshot","args":"--viewport /tmp/m2-trappist-1.png","origin":"http://localhost:8471/","durationMs":33,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:32.500Z","cmd":"js","args":"document.getElementById('wasp-76b').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:33.988Z","cmd":"screenshot","args":"--viewport /tmp/m2-wasp-76b.png","origin":"http://localhost:8471/","durationMs":40,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:34.029Z","cmd":"js","args":"document.getElementById('finale').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:50:35.519Z","cmd":"screenshot","args":"--viewport /tmp/m2-finale.png","origin":"http://localhost:8471/","durationMs":36,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:51:42.198Z","cmd":"reload","args":"","origin":"http://localhost:8471/","durationMs":20,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:51:43.059Z","cmd":"js","args":"document.getElementById('earth').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:51:44.547Z","cmd":"screenshot","args":"--viewport /tmp/m2-earth2.png","origin":"http://localhost:8471/","durationMs":27,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:51:44.581Z","cmd":"js","args":"document.getElementById('trappist-1').scrollIntoView({block:'center'})","origin":"http://localhost:8471/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-04T10:51:46.061Z","cmd":"screenshot","args":"--viewport /tmp/m2-trappist2.png","origin":"http://localhost:8471/","durationMs":29,"status":"ok","hasCookies":false,"mode":"launched"}

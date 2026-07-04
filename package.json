@@ -1,0 +1,10 @@
+{
+  "name": "parsec",
+  "version": "0.1.0",
+  "description": "Scroll to the edge of the known universe",
+  "type": "module",
+  "scripts": {
+    "test": "node --test 'test/*.test.mjs'"
+  },
+  "license": "MIT"
+}

@@ -5,14 +5,14 @@ import { mulberry32, between } from './rand.js'
 
 const SPECS = {
   sun: { type: 'star', palette: ['#fff7e8', '#ffd98a', '#ff9d3d'] },
-  mercury: { type: 'rocky', palette: ['#9a9187', '#6e675f'], speckle: 900, seed: 11 },
-  venus: { type: 'rocky', palette: ['#e8cf9e', '#c9a86a'], haze: '#f4e3bd', bands: 5, seed: 12 },
-  earth: { type: 'rocky', palette: ['#3a6db5', '#2c4f86'], patches: '#4b8a4e', cap: '#eef4f8', clouds: true, moon: true, glow: '#7fb2ff', seed: 13 },
-  mars: { type: 'rocky', palette: ['#b5643c', '#8a4a2c'], speckle: 400, cap: '#e8dcd2', glow: '#d98a63', seed: 14 },
-  jupiter: { type: 'gas', palette: ['#d8b48f', '#b08a64', '#e8d4b8', '#a9764f'], bands: 9, spot: '#c25b3f', seed: 15 },
-  saturn: { type: 'gas', palette: ['#e2c896', '#c9ae78', '#efe0bc'], bands: 7, ring: { tilt: -0.32, color: '#d9c49a' }, seed: 16 },
-  uranus: { type: 'ice', palette: ['#aee3e8', '#7fc4cf'], bands: 2, glow: '#bdeef2', seed: 17 },
-  neptune: { type: 'ice', palette: ['#3f6de0', '#2c4bb0'], bands: 3, spot: '#2a3f8f', glow: '#5f8aff', seed: 18 },
+  mercury: { type: 'rocky', palette: ['#9a9187', '#6e675f'], speckle: 900, seed: 11, texture: 'mercury', rot: 0.8 },
+  venus: { type: 'rocky', palette: ['#e8cf9e', '#c9a86a'], haze: '#f4e3bd', bands: 5, seed: 12, texture: 'venus_atmosphere', rot: 0 },
+  earth: { type: 'rocky', palette: ['#3a6db5', '#2c4f86'], patches: '#4b8a4e', cap: '#eef4f8', clouds: true, moon: true, glow: '#7fb2ff', seed: 13, texture: 'earth_daymap', rot: 2.6 },
+  mars: { type: 'rocky', palette: ['#b5643c', '#8a4a2c'], speckle: 400, cap: '#e8dcd2', glow: '#d98a63', seed: 14, texture: 'mars', rot: 1.2 },
+  jupiter: { type: 'gas', palette: ['#d8b48f', '#b08a64', '#e8d4b8', '#a9764f'], bands: 9, spot: '#c25b3f', seed: 15, texture: 'jupiter', rot: 4.1 },
+  saturn: { type: 'gas', palette: ['#e2c896', '#c9ae78', '#efe0bc'], bands: 7, ring: { tilt: -0.32, color: '#d9c49a' }, seed: 16, texture: 'saturn', rot: 0 },
+  uranus: { type: 'ice', palette: ['#aee3e8', '#7fc4cf'], bands: 2, glow: '#bdeef2', seed: 17, texture: 'uranus', rot: 0 },
+  neptune: { type: 'ice', palette: ['#3f6de0', '#2c4bb0'], bands: 3, spot: '#2a3f8f', glow: '#5f8aff', seed: 18, texture: 'neptune', rot: 0.5 },
   pluto: { type: 'rocky', palette: ['#c4a986', '#96765a'], patches: '#e3d3c0', speckle: 200, seed: 19 },
   heliopause: { type: 'threshold' },
   'voyager-1': { type: 'probe' },
@@ -24,6 +24,74 @@ const SPECS = {
   'kepler-452b': { type: 'exo', palette: ['#5f8a5a', '#3f5f7a'], rim: '#cfe8a8', seed: 25 },
   sweeps: { type: 'exo', palette: ['#5a5f7a', '#3a3f52'], rim: '#8a93c4', dim: true, seed: 26 },
   finale: { type: 'galaxy', seed: 27 },
+}
+
+// ---- texture loading (NASA-derived maps, CC BY 4.0 Solar System Scope) ----
+
+const textureData = {} // name → {data, w, h}
+
+export async function loadTextures() {
+  const names = [...new Set(Object.values(SPECS).map(s => s.texture).filter(Boolean))]
+  names.push('moon') // Earth's companion
+  await Promise.all(
+    names.map(
+      name =>
+        new Promise(resolve => {
+          const img = new Image()
+          img.onload = () => {
+            const c = document.createElement('canvas')
+            c.width = img.naturalWidth
+            c.height = img.naturalHeight
+            const cx = c.getContext('2d', { willReadFrequently: true })
+            cx.drawImage(img, 0, 0)
+            textureData[name] = {
+              data: cx.getImageData(0, 0, c.width, c.height),
+              w: c.width,
+              h: c.height,
+            }
+            resolve()
+          }
+          img.onerror = resolve // offline / missing → procedural fallback stays
+          img.src = `assets/textures/${name}.jpg`
+        })
+    )
+  )
+  return Object.keys(textureData).length > 0
+}
+
+// orthographic sphere with equirectangular texture + diffuse lighting.
+// operates in device pixels (ImageData ignores canvas transforms).
+function paintTexturedSphere(ctx, tex, cx, cy, r, rot = 0) {
+  const x0 = Math.floor(cx - r), y0 = Math.floor(cy - r), size = Math.ceil(r * 2)
+  const out = ctx.getImageData(x0, y0, size, size)
+  const od = out.data
+  const td = tex.data.data
+  // light from the upper-left, slightly toward the viewer
+  const LX = -0.42, LY = -0.38, LZ = 0.82
+  for (let py = 0; py < size; py++) {
+    for (let px = 0; px < size; px++) {
+      const nx = (x0 + px + 0.5 - cx) / r
+      const ny = (y0 + py + 0.5 - cy) / r
+      const d2 = nx * nx + ny * ny
+      if (d2 > 1) continue
+      const nz = Math.sqrt(1 - d2)
+      const lon = Math.atan2(nx, nz) + rot
+      const lat = Math.asin(ny)
+      let u = Math.floor(((lon / (2 * Math.PI) + 0.5) % 1) * tex.w)
+      if (u < 0) u += tex.w
+      const v = Math.min(tex.h - 1, Math.floor((lat / Math.PI + 0.5) * tex.h))
+      const ti = (v * tex.w + u) * 4
+      // diffuse + ambient, plus a soft edge fade for anti-aliasing
+      const light = Math.min(0.28 + 0.85 * Math.max(nx * LX + ny * LY + nz * LZ, 0), 1.08)
+      const edge = Math.min((1 - Math.sqrt(d2)) * r * 1.6, 1)
+      const oi = (py * size + px) * 4
+      od[oi] = td[ti] * light
+      od[oi + 1] = td[ti + 1] * light
+      od[oi + 2] = td[ti + 2] * light
+      od[oi + 3] = 255 * edge
+    }
+  }
+  ctx.putImageData(out, x0, y0)
 }
 
 export function visualFor(id, px) {
@@ -44,6 +112,21 @@ export function visualFor(id, px) {
   const ctx = c.getContext('2d')
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
   const cx = size / 2, cy = size / 2, r = px / 2
+
+  const tex = spec.texture && textureData[spec.texture]
+  if (tex) {
+    if (spec.ring) paintRing(ctx, spec, cx, cy, r, 'back')
+    ctx.save()
+    ctx.setTransform(1, 0, 0, 1, 0, 0) // ImageData works in device pixels
+    paintTexturedSphere(ctx, tex, cx * dpr, cy * dpr, r * dpr, spec.rot ?? 0)
+    if (spec.moon && textureData.moon) {
+      paintTexturedSphere(ctx, textureData.moon, (cx + r * 1.55) * dpr, (cy - r * 0.85) * dpr, r * 0.16 * dpr, 1.5)
+    }
+    ctx.restore()
+    if (spec.ring) paintRing(ctx, spec, cx, cy, r, 'front')
+    if (spec.glow) paintGlowRing(ctx, cx, cy, r + 1, spec.glow, 0.35)
+    return c
+  }
 
   const painters = {
     star: paintStar, rocky: paintSphere, gas: paintSphere, ice: paintSphere,
@@ -253,11 +336,59 @@ function paintStar(ctx, spec, cx, cy, r) {
   ctx.fill()
 }
 
+// fractal value noise on a small lattice — cheap surface mottling
+function noiseCanvas(seed, size) {
+  const c = document.createElement('canvas')
+  c.width = size
+  c.height = size
+  const ctx = c.getContext('2d')
+  const img = ctx.createImageData(size, size)
+  const d = img.data
+  const octaves = [
+    { cells: 6, amp: 0.55 },
+    { cells: 14, amp: 0.3 },
+    { cells: 30, amp: 0.15 },
+  ].map(o => {
+    const rng = mulberry32(seed + o.cells)
+    const n = o.cells + 2
+    const grid = Array.from({ length: n * n }, () => rng())
+    return { ...o, grid, n }
+  })
+  const smooth = t => t * t * (3 - 2 * t)
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      let v = 0
+      for (const o of octaves) {
+        const gx = (x / size) * o.cells
+        const gy = (y / size) * o.cells
+        const x0 = Math.floor(gx), y0 = Math.floor(gy)
+        const tx = smooth(gx - x0), ty = smooth(gy - y0)
+        const g = (xx, yy) => o.grid[yy * o.n + xx]
+        const top = g(x0, y0) * (1 - tx) + g(x0 + 1, y0) * tx
+        const bot = g(x0, y0 + 1) * (1 - tx) + g(x0 + 1, y0 + 1) * tx
+        v += (top * (1 - ty) + bot * ty) * o.amp
+      }
+      const i = (y * size + x) * 4
+      const g255 = v * 255
+      d[i] = d[i + 1] = d[i + 2] = g255
+      d[i + 3] = 255
+    }
+  }
+  ctx.putImageData(img, 0, 0)
+  return c
+}
+
 function paintExo(ctx, spec, cx, cy, r) {
   // rim-lit mystery worlds: mostly shadow, lit crescent on one side
   const rng = mulberry32(spec.seed ?? 2)
   sphereClip(ctx, cx, cy, r, () => {
     paintBase(ctx, cx, cy, r, spec.palette)
+    // fractal mottling so the surface reads as terrain, not gradient
+    ctx.save()
+    ctx.globalCompositeOperation = 'overlay'
+    ctx.globalAlpha = 0.55
+    ctx.drawImage(noiseCanvas(spec.seed ?? 2, 128), cx - r, cy - r, r * 2, r * 2)
+    ctx.restore()
     if (spec.molten) {
       // glowing day-side veins
       ctx.globalAlpha = 0.5

@@ -1,7 +1,7 @@
 import { buildScale, formatDistance } from './scale.js'
 import { ENTRIES } from './journey.js'
 import { Starfield } from './render/starfield.js'
-import { visualFor, paintBelt } from './render/planets.js'
+import { visualFor, paintBelt, loadTextures } from './render/planets.js'
 import { Field } from './render/particles.js'
 import { mountClips, scrubClips } from './video.js'
 
@@ -27,6 +27,7 @@ const SIZES = {
 }
 
 const parallaxTargets = []
+const artRefs = {} // id → {el, size} for texture repaint
 
 for (const e of ENTRIES) {
   const sec = document.createElement('section')
@@ -53,6 +54,7 @@ for (const e of ENTRIES) {
       art.className = 'world'
       wrap.appendChild(art)
       parallaxTargets.push({ el: art, sec, k: 0.14 })
+      artRefs[e.id] = { size }
     }
     const card = document.createElement('div')
     card.className = 'card'
@@ -72,6 +74,23 @@ for (const e of ENTRIES) {
 }
 
 mountClips()
+
+// texture maps load async; repaint solar-system worlds when ready.
+// on failure the procedural paintings simply remain.
+loadTextures().then(ok => {
+  if (!ok) return
+  for (const [id, ref] of Object.entries(artRefs)) {
+    const fresh = visualFor(id, ref.size)
+    if (!fresh) continue
+    const t = parallaxTargets.find(t => t.sec.id === id)
+    const old = t?.el
+    if (!old || !old.parentNode) continue
+    fresh.className = old.className
+    fresh.style.transform = old.style.transform
+    old.replaceWith(fresh)
+    t.el = fresh
+  }
+})
 
 // ---- fade-in on approach ----
 

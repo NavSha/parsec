@@ -10,6 +10,7 @@ const counterEl = document.getElementById('counter')
 const valueEl = counterEl.querySelector('.value')
 const unitEl = counterEl.querySelector('.unit')
 const passedEl = counterEl.querySelector('.passed')
+const unitNoteEl = counterEl.querySelector('.unit-note')
 const tooltipEl = document.getElementById('tooltip')
 
 // ---- build sections ----
@@ -161,6 +162,7 @@ function update() {
     const { value, unit } = formatDistance(scale.distanceAt(p))
     valueEl.textContent = value
     unitEl.textContent = unit
+    noteUnitChange(unit)
     if (field) {
       const n = field.passedCount()
       passedEl.textContent = n > 0 ? `${n.toLocaleString('en-US')} worlds behind you` : ''
@@ -179,6 +181,24 @@ function update() {
       }
     }
   }
+}
+
+// first time a new unit appears, explain it briefly — the unit switch
+// is the story beat ("you've just left human scale")
+const UNIT_NOTES = {
+  AU: '1 AU = the Earth–Sun distance, 150 million km',
+  'light-years': '1 light-year = the distance light travels in a year — 63,000 AU',
+}
+const seenUnits = new Set(['km'])
+let noteTimer = null
+
+function noteUnitChange(unit) {
+  if (seenUnits.has(unit)) return
+  seenUnits.add(unit)
+  unitNoteEl.textContent = UNIT_NOTES[unit] ?? ''
+  unitNoteEl.classList.add('show')
+  clearTimeout(noteTimer)
+  noteTimer = setTimeout(() => unitNoteEl.classList.remove('show'), 6000)
 }
 
 let ticking = false

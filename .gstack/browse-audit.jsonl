@@ -130,3 +130,15 @@
 {"ts":"2026-07-05T05:39:16.232Z","cmd":"screenshot","args":"--viewport /tmp/tex-mars.png","origin":"http://localhost:8471/?tex=1","durationMs":38,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-05T05:39:16.266Z","cmd":"js","args":"document.getElementById('kepler-452b').scrollIntoView({block:'center'})","origin":"http://localhost:8471/?tex=1","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-05T05:39:17.658Z","cmd":"screenshot","args":"--viewport /tmp/tex-kepler-452b.png","origin":"http://localhost:8471/?tex=1","durationMs":41,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:18.726Z","cmd":"viewport","args":"1200x630","origin":"about:blank","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:18.833Z","cmd":"goto","args":"http://localhost:8471/?og=1","origin":"http://localhost:8471/?og=1","durationMs":74,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:19.886Z","cmd":"js","args":"Promise.all(['js/main.js','js/audio.js','css/main.css','index.html'].map(u=>fetch(u,{cache:'reload'})))","origin":"http://localhost:8471/?og=1","durationMs":5,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:19.947Z","cmd":"reload","args":"","origin":"http://localhost:8471/?og=1","durationMs":27,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:22.991Z","cmd":"js","args":"const v=document.querySelector('#title video'); v.currentTime=2.5; v.pause(); document.querySelector('#title .hint').style.display='none'; document.getElementById('sound').style.display='none'","origin":"http://localhost:8471/?og=1","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:24.128Z","cmd":"screenshot","args":"--viewport assets/og.png","origin":"http://localhost:8471/?og=1","durationMs":91,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:24.160Z","cmd":"console","args":"--errors","origin":"http://localhost:8471/?og=1","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:45.650Z","cmd":"js","args":"document.getElementById('sound').style.display=''","origin":"http://localhost:8471/?og=1","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:45.846Z","cmd":"click","args":"#sound","origin":"http://localhost:8471/?og=1","durationMs":158,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:46.403Z","cmd":"js","args":"document.getElementById('sound').getAttribute('aria-pressed')","origin":"http://localhost:8471/?og=1","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:46.439Z","cmd":"js","args":"(() => { try { return typeof AudioContext } catch { return 'none' } })()","origin":"http://localhost:8471/?og=1","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-07T06:50:46.474Z","cmd":"console","args":"--errors","origin":"http://localhost:8471/?og=1","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}

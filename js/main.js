@@ -4,6 +4,7 @@ import { Starfield } from './render/starfield.js'
 import { visualFor, paintBelt, loadTextures } from './render/planets.js'
 import { Field } from './render/particles.js'
 import { mountClips, scrubClips } from './video.js'
+import { toggleSound, setAudioProgress, chime, soundOn } from './audio.js'
 
 const journeyEl = document.getElementById('journey')
 const counterEl = document.getElementById('counter')
@@ -94,13 +95,28 @@ loadTextures().then(ok => {
 
 // ---- fade-in on approach ----
 
+let chimeIndex = 0
 const io = new IntersectionObserver(
   entries => {
-    for (const en of entries) en.target.classList.toggle('visible', en.isIntersecting)
+    for (const en of entries) {
+      en.target.classList.toggle('visible', en.isIntersecting)
+      // one soft ping per stop per visit, if sound is on
+      if (en.isIntersecting && en.target.classList.contains('stop') && soundOn() && !en.target.dataset.chimed) {
+        en.target.dataset.chimed = '1'
+        chime(chimeIndex++)
+      }
+    }
   },
   { threshold: 0.3 }
 )
 for (const sec of journeyEl.children) io.observe(sec)
+
+// ---- ambient sound toggle ----
+
+const soundBtn = document.getElementById('sound')
+soundBtn.addEventListener('click', () => {
+  soundBtn.setAttribute('aria-pressed', String(toggleSound()))
+})
 
 // ---- starfield ----
 
@@ -173,6 +189,7 @@ function update() {
   // counter matches each stop when its card is centered on screen
   const p = (window.scrollY + window.innerHeight / 2 - titleH) / journeyEl.offsetHeight
   stars.setScroll(window.scrollY, Math.min(Math.max(p, 0), 1))
+  setAudioProgress(p)
 
   if (window.scrollY < titleH * 0.6) {
     counterEl.classList.remove('on')

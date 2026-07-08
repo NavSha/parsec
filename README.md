@@ -31,4 +31,4 @@ No framework, no build step. Vanilla HTML/CSS/JS.
 ## Data & credits
 
 - Exoplanet data from the [NASA Exoplanet Archive](https://exoplanetarchive.ipac.caltech.edu/) (`ps` table, `default_flag=1`), fetched at build time into `data/exoplanets.json`.
-- Solar-system texture maps by [Solar System Scope](https://www.solarsystemscope.com/textures/) (CC BY 4.0, NASA-derived), wrapped onto canvas spheres at runtime (`scripts/fetch-textures.sh` to refresh). Exoplanet surfaces stay procedural — nobody knows what they look like.
+- Solar-system texture maps by [Solar System Scope](https://www.solarsystemscope.com/textures/) (CC BY 4.0, NASA-derived), wrapped onto canvas spheres at runtime (`scripts/fetch-textures.sh` to refresh). Pluto uses the New Horizons global colour mosaic (NASA/JHUAPL/SwRI, public domain). Exoplanet surfaces stay procedural — nobody knows what they look like.

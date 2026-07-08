@@ -13,7 +13,7 @@ const SPECS = {
   saturn: { type: 'gas', palette: ['#e2c896', '#c9ae78', '#efe0bc'], bands: 7, ring: { tilt: -0.32, color: '#d9c49a' }, seed: 16, texture: 'saturn', rot: 0 },
   uranus: { type: 'ice', palette: ['#aee3e8', '#7fc4cf'], bands: 2, glow: '#bdeef2', seed: 17, texture: 'uranus', rot: 0 },
   neptune: { type: 'ice', palette: ['#3f6de0', '#2c4bb0'], bands: 3, spot: '#2a3f8f', glow: '#5f8aff', seed: 18, texture: 'neptune', rot: 0.5 },
-  pluto: { type: 'rocky', palette: ['#c4a986', '#96765a'], patches: '#e3d3c0', speckle: 200, seed: 19 },
+  pluto: { type: 'rocky', palette: ['#c4a986', '#96765a'], patches: '#e3d3c0', speckle: 200, seed: 19, texture: 'pluto', rot: 0 },
   heliopause: { type: 'threshold' },
   'voyager-1': { type: 'probe' },
   'proxima-b': { type: 'exo', palette: ['#8f5a4a', '#5c3a33'], rim: '#ff8a5c', seed: 21 },
@@ -26,7 +26,8 @@ const SPECS = {
   finale: { type: 'galaxy', seed: 27 },
 }
 
-// ---- texture loading (NASA-derived maps, CC BY 4.0 Solar System Scope) ----
+// ---- texture loading (NASA-derived maps, CC BY 4.0 Solar System Scope;
+//      Pluto = New Horizons global mosaic, NASA/JHUAPL/SwRI, public domain) ----
 
 const textureData = {} // name → {data, w, h}
 
